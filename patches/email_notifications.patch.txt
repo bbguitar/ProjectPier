@@ -1,0 +1,311 @@
+Index: language/en_us/emails.php
+===================================================================
+--- language/en_us/emails.php	(revision 159)
++++ language/en_us/emails.php	(working copy)
+@@ -7,7 +7,8 @@
+     'new comment' => 'New comment',
+     'your account created' => 'Your account has been created',
+     'your password' => 'Your password',
+-    'milestone assigned to you' => 'Milestone has been assigned to you',
++    'milestone assigned to you' => 'Milestone assigned to you',
++    'task assigned to you' => 'Task assigned to you',
+     
+     // Interface
+     'hi john doe' => 'Hi %s',
+@@ -16,10 +17,10 @@
+     
+     'dont reply wraning' => 'THIS IS A SYSTEM NOTIFICATION. DO NOT REPLY TO THIS EMAIL!',
+     'new message posted' => 'New message "%s" has been posted in the "%s" project',
+-    'view new message' => 'View that message',
++    'view new message' => 'View the message',
+     
+     'new comment posted' => 'New comment on "%s" has been posted',
+-    'view new comment' => 'View that comment',
++    'view new comment' => 'View the comment',
+     
+     'user created your account' => '%s created a new account for you',
+     'visit and login' => 'Visit %s and login with',
+@@ -27,6 +28,9 @@
+     'milestone assigned' => 'Milestone "%s" has been assigned to you',
+     'view assigned milestones' => 'View the milestone',
+     
++    'task assigned' => 'A Task has been assigned to you',
++    'view task list' => 'View the task list',
++    
+   ); // array
+ 
+ ?>
+Index: language/en_us/project_interface.php
+===================================================================
+--- language/en_us/project_interface.php	(revision 159)
++++ language/en_us/project_interface.php	(working copy)
+@@ -41,7 +41,7 @@
+     'milestone assigned to' => 'Assigned to %s',
+     'project started on' => 'Started on',
+     
+-    'send milestone assigned to notification' => 'Send email notification to user',
++    'send assigned to notification' => 'Send email notification to user',
+     
+     'edit company data' => '<a href="%s">Edit</a> company data',
+     'company users involved in project' => '%s users involved in %s',
+@@ -61,6 +61,8 @@
+     'email notification' => 'Email notification',
+     'email notification desc' => 'Notify selected people about this message via email',
+     
++    'notification sent' => 'Notification sent to %s',
++    
+     'attach existing file' => 'Attach an existing file (from the Files section)',
+     'upload and attach' => 'Upload a new file and attach it to the message',
+     
+Index: application/models/notifier/Notifier.class.php
+===================================================================
+--- application/models/notifier/Notifier.class.php	(revision 159)
++++ application/models/notifier/Notifier.class.php	(working copy)
+@@ -142,6 +142,31 @@
+         tpl_fetch(get_template_path('new_comment', 'notifier'))
+       ); // send
+     } // newMessageComment
++
++    /**
++    * Tests to see if $new_user is not the same as $old_user
++    * if users are different return true so a notification can be sent
++    * otherwise return false so the notification can be avoided 
++    *
++    * @param $new_user (optional) Newly assigned user (if applicable)
++    * @param $old_user (optional) Previously assigned user (if applicable)
++    * @return boolean
++    */
++    static function nodifyNeeded($new_user, $old_user) {
++      if ($old_user instanceof User) {
++        // We have a new owner and it is different than old owner
++        if ($new_user instanceof User && $new_user->getId() <> $old_user->getId()) {
++          return true;
++        }
++      } else {
++        // We have new owner
++        if ($new_user instanceof User) {
++          return true;
++        }
++      } // if
++
++      return false;
++    }
+     
+     // ---------------------------------------------------
+     //  Milestone
+@@ -171,7 +196,33 @@
+         tpl_fetch(get_template_path('milestone_assigned', 'notifier'))
+       ); // send
+     } // milestoneAssigned
++
++    /**
++    * Task has been assigned to the user
++    *
++    * @param ProjectTask $task
++    * @return boolean
++    * @throws NotifierConnectionError
++    */
++    function taskAssigned(ProjectTask $task) {
++      if ($task->isCompleted()) {
++        return true; // task has been already completed...
++      } // if
++      if (!($task->getAssignedTo() instanceof User)) {
++        return true; // not assigned to user
++      } // if
++      
++      tpl_assign('task_assigned', $task);
++      
++      return self::sendEmail(
++        self::prepareEmailAddress($task->getAssignedTo()->getEmail(), $task->getAssignedTo()->getDisplayName()),
++        self::prepareEmailAddress($task->getCreatedBy()->getEmail(), $task->getCreatedByDisplayName()),
++        $task->getProject()->getName() . ' - ' . lang('task assigned to you') . " - " . $task->getText(),
++        tpl_fetch(get_template_path('task_assigned', 'notifier'))
++      ); // send
++    } // milestoneAssigned
+     
++
+     // ---------------------------------------------------
+     //  Util functions
+     // ---------------------------------------------------
+Index: application/models/versons_feed/VersionsFeed.class.php
+===================================================================
+--- application/models/versons_feed/VersionsFeed.class.php	(revision 159)
++++ application/models/versons_feed/VersionsFeed.class.php	(working copy)
+@@ -27,8 +27,8 @@
+     *
+     * @var string
+     */
+-    private $feed_url = 'http://upgrade.projectpier.org/upgrade.xml';
+-    
++//    private $feed_url = 'http://upgrade.projectpier.org/upgrade.xml';
++    private $feed_url = 'https://dev.2catdesigns.com/~corey/dev/projectpier/upgrade.xml';
+     /**
+     * Feed format - version
+     *
+Index: application/controllers/TaskController.class.php
+===================================================================
+--- application/controllers/TaskController.class.php	(revision 159)
++++ application/controllers/TaskController.class.php	(working copy)
+@@ -84,7 +84,7 @@
+       
+       tpl_assign('task_list_data', $task_list_data);
+       tpl_assign('task_list', $task_list);
+-      
++
+       if (is_array(array_var($_POST, 'task_list'))) {
+         
+         $task_list->setFromAttributes($task_list_data);
+@@ -100,7 +100,8 @@
+             $tasks[] = array(
+               'text' => array_var($task_list_data["task$i"], 'text'),
+               'assigned_to_company_id' => array_var($assigned_to, 0, 0),
+-              'assigned_to_user_id' => array_var($assigned_to, 1, 0)
++              'assigned_to_user_id' => array_var($assigned_to, 1, 0),
++              'send_notification' => array_var($task_list_data["task$i"], 'send_notification'),
+             ); // array
+           } // if
+         } // for
+@@ -116,11 +117,25 @@
+             $task->setFromAttributes($task_data);
+             $task_list->attachTask($task);
+             $task->save();
++
++            tpl_assign('task', $task);
++
++            // notify user
++            if (array_var($task_data, 'send_notification') == 'checked') {
++              try {
++                if (Notifier::nodifyNeeded($task->getAssignedTo(), null)) {
++                  Notifier::taskAssigned($task);
++                }
++              } catch(Exception $e) {
++                Logger::log("Error: Notification failed, " . $e->getMessage(), Logger::ERROR);
++              } // try
++            } // if
++
+           } // foreach
+           
+           ApplicationLogs::createLog($task_list, active_project(), ApplicationLogs::ACTION_ADD);
+           DB::commit();
+-          
++
+           flash_success(lang('success add task list', $task_list->getName()));
+           $this->redirectToUrl($task_list->getViewUrl());
+           
+@@ -329,7 +344,8 @@
+       
+       $task = new ProjectTask();
+       $task_data = array_var($_POST, 'task');
+-      
++      $old_owner = $task->getAssignedTo();
++
+       tpl_assign('task', $task);
+       tpl_assign('task_list', $task_list);
+       tpl_assign('back_to_list', $back_to_list);
+@@ -350,7 +366,18 @@
+           $task_list->attachTask($task);
+           ApplicationLogs::createLog($task, active_project(), ApplicationLogs::ACTION_ADD);
+           DB::commit();
+-          
++
++          // notify user
++          if (array_var($task_data, 'send_notification') == 'checked') {
++            try {
++              if (Notifier::nodifyNeeded($task->getAssignedTo(), $old_owner)) {
++                Notifier::taskAssigned($task);
++              }
++            } catch(Exception $e) {
++              Logger::log("Error: Notification failed, " . $e->getMessage(), Logger::ERROR);
++            } // try
++          } // if
++
+           flash_success(lang('success add task'));
+           if ($back_to_list) {
+             $this->redirectToUrl($task_list->getViewUrl());
+@@ -375,7 +402,7 @@
+     */
+     function edit_task() {
+       $this->setTemplate('add_task');
+-      
++
+       $task = ProjectTasks::findById(get_id());
+       if (!($task instanceof ProjectTask)) {
+         flash_error(lang('task dnx'));
+@@ -407,6 +434,7 @@
+       tpl_assign('task_data', $task_data);
+       
+       if (is_array(array_var($_POST, 'task'))) {
++        $old_owner = $task->getAssignedTo();
+         $task->setFromAttributes($task_data);
+         $task->setTaskListId($task_list->getId()); // keep old task list id
+         
+@@ -432,7 +460,18 @@
+           
+           ApplicationLogs::createLog($task, active_project(), ApplicationLogs::ACTION_EDIT);
+           DB::commit();
+-          
++
++          // notify user
++          if (array_var($task_data, 'send_notification') == 'checked') {
++            try {
++              if (Notifier::nodifyNeeded($task->getAssignedTo(), $old_owner)) {
++                Notifier::taskAssigned($task);
++              }
++            } catch(Exception $e) {
++              Logger::log("Error: Notification failed, " . $e->getMessage(), Logger::ERROR);
++            } // try
++          } // if
++
+           flash_success(lang('success edit task'));
+           
+           // Redirect to task list. Check if we have updated task list ID first
+Index: application/views/milestone/add_milestone.php
+===================================================================
+--- application/views/milestone/add_milestone.php	(revision 159)
++++ application/views/milestone/add_milestone.php	(working copy)
+@@ -40,7 +40,7 @@
+       <?php echo label_tag(lang('assign to'), 'milestoneFormAssignedTo') ?>
+       <?php echo assign_to_select_box('milestone[assigned_to]', active_project(), array_var($milestone_data, 'assigned_to'), array('id' => 'milestoneFormAssignedTo')) ?>
+     </div>
+-    <div><?php echo checkbox_field('milestone[send_notification]', array_var($milestone_data, 'send_notification', true), array('id' => 'milestoneFormSendNotification')) ?> <label for="milestoneFormSendNotification" class="checkbox"><?php echo lang('send milestone assigned to notification') ?></label></div>
++    <div><?php echo checkbox_field('milestone[send_notification]', array_var($milestone_data, 'send_notification', true), array('id' => 'milestoneFormSendNotification')) ?> <label for="milestoneFormSendNotification" class="checkbox"><?php echo lang('send assigned to notification') ?></label></div>
+   </div>
+   
+   <div class="formBlock">
+Index: application/views/task/add_task.php
+===================================================================
+--- application/views/task/add_task.php	(revision 159)
++++ application/views/task/add_task.php	(working copy)
+@@ -33,6 +33,7 @@
+     <label><?php echo lang('assign to') ?>:</label>
+     <?php echo assign_to_select_box("task[assigned_to]", active_project(), array_var($task_data, 'assigned_to')) ?>
+   </div>
++  <div><?php echo checkbox_field('task[send_notification]', array_var($task_data, 'send_notification', true), array('id' => 'taskFormSendNotification')) ?> <label for="taskFormSendNotification" class="checkbox"><?php echo lang('send assigned to notification') ?></label></div>
+   
+   <?php echo submit_button($task->isNew() ? lang('add task') : lang('edit task')) ?>
+ </form>
+Index: application/views/task/task_list.php
+===================================================================
+--- application/views/task/task_list.php	(revision 159)
++++ application/views/task/task_list.php	(working copy)
+@@ -69,7 +69,7 @@
+           <label for="addTaskAssignTo<?php echo $task_list->getId() ?>"><?php echo lang('assign to') ?>:</label>
+           <?php echo assign_to_select_box("task[assigned_to]", active_project(), null, array('id' => 'addTaskAssignTo' . $task_list->getId())) ?>
+         </div>
+-        
++        <div><?php echo checkbox_field('task[send_notification]', array_var($task_data, 'send_notification', true), array('id' => 'taskFormSendNotification')) ?> <label for="taskFormSendNotification" class="checkbox"><?php echo lang('send assigned to notification') ?></label></div>
+         <?php echo submit_button(lang('add task'), 's', array('id' => 'addTaskSubmit' . $task_list->getId())) ?> <?php echo lang('or') ?> <a href="#" onclick="App.modules.addTaskForm.hideAddTaskForm(<?php echo $task_list->getId() ?>); return false;"><?php echo lang('cancel') ?></a>
+         
+       </form>
+Index: application/views/task/add_list.php
+===================================================================
+--- application/views/task/add_list.php	(revision 159)
++++ application/views/task/add_list.php	(working copy)
+@@ -58,6 +58,7 @@
+       </td>
+       <td>
+         <?php echo assign_to_select_box("task_list[task$i][assigned_to]", active_project(), array_var($task_list_data["task$i"], 'assigned_to')) ?>
++        <div><?php echo checkbox_field("task_list[task$i][send_notification]", array_var($task_list_data["task$i"], 'send_notification', true), array('id' => 'taskFormSendNotification')) ?> <label for="taskFormSendNotification" class="checkbox"><?php echo lang('send assigned to notification') ?></label></div>
+       </td>
+     </tr>
+ <?php } // for ?>

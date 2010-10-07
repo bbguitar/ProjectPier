@@ -1,0 +1,165 @@
+label {
+  margin: 3px 0;
+  font-weight: bold;
+  display: block;
+}
+
+label.checkbox, label.yes_no {
+  display: inline;
+  position: relative;
+  top: -2px;
+}
+
+* html label.checkbox, * html label.yes_no {
+  top: 1px;
+}
+
+label.yes_no {
+  font-weight: normal;
+}
+
+label span.label_required {
+  color: red;
+}
+
+input, textarea, select {
+  border: 1px solid #ccc;
+  padding: 5px;
+  font-family: verdana, arial, helvetica, sans-serif;
+  font-size: 11px;
+  background: #FFF;
+}
+
+select {
+  padding: 1px;
+}
+
+input:hover, textarea:hover, select:hover {
+  border: 1px solid #AAA;
+  background: #fff;
+}
+
+input:focus, textarea:focus, select:focus {
+  border: 1px solid #AAA;
+  background: #fff;
+}
+
+fieldset {
+  padding: 20px;
+  border: 1px solid #c7c6c6;
+  margin-bottom:20px;
+  margin-top:10px;
+}
+
+fieldset legend {;
+  color: #cf5b20;
+  font-weight: bold;
+}
+
+input { width: 250px; margin:0; padding:0;  font-size:14px }
+input.short { width: 250px; height:18px; margin-bottom: 10px;}
+input.medium { width: 250px; height:18px; margin-bottom: 10px;}
+input.long { width: 250px; height:18px; margin-bottom: 10px;}
+input.title { width: 250px;height:18px; margin-bottom: 10px; }
+
+input.checkbox, input.yes_no {
+  border: 0;
+  width: auto;
+  height:auto;
+  background: transparent;
+}
+
+legend label.checkbox {
+  font-weight: bold;
+}
+
+textarea, textarea.long {
+margin-bottom: 10px;
+  width: 305px;
+  margin:0;
+  padding:0;
+  height: 150px;
+}
+
+textarea.short {
+margin-bottom: 10px;
+  width: 305px;
+  height: 70px;
+}
+
+textarea.comment {
+  width: 305px;
+  height: 150px;
+  margin-bottom: 10px;
+}
+
+textarea.editor {
+  width: 305px;
+  height: 300px;
+}
+
+
+
+button.submit {
+  margin-top: 10px;
+  padding:2px;
+}
+
+span.required {
+  color: red;
+  font-size: 90%;
+}
+
+form div.formBlock {
+
+}
+
+form div.formBlock label {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+#formErrors {
+background:url(../../images/layout/alert_box_bg.jpg) repeat-x #ffbeb4;
+  padding: 20px;
+
+}
+
+#formErrors ul li {
+  font-size: 100%;
+}
+
+/** Options block, best to put it into fieldset **/
+
+.objectOption {
+  margin-top: 5px;
+}
+
+.objectOption .optionLabel {
+  float: left;
+  display: block;
+  width: 140px;
+}
+
+.objectOption .optionLabel label {
+  margin: 0;
+  padding: 0;
+}
+
+.objectOption div.optionControl {
+  margin-left: 140px;
+}
+
+.objectOption div.optionDesc {
+  clear: left;
+  font-size: 10px;
+  padding: 0 5px 5px 5px;
+  color: #333;
+}
+
+button, input {
+border: 1px solid #c7c6c6;
+padding:2px;
+color:#292929;
+
+}

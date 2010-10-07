@@ -1,0 +1,26 @@
+***************
+*** 205,210 ****
+      // Confirmation
+      'confirm delete message' => 'Are you sure that you want to delete this message?',
+      'confirm delete milestone' => 'Are you sure that you want to delete this milestone?',
+      'confirm delete task list' => 'Are you sure that you want to delete this task lists and all of its tasks?',
+      'confirm delete task' => 'Are you sure that you want to delete this task?',
+      'confirm delete comment' => 'Are you sure that you want to delete this comment?',
+--- 212,218 ----
+      // Confirmation
+      'confirm delete message' => 'Are you sure that you want to delete this message?',
+      'confirm delete milestone' => 'Are you sure that you want to delete this milestone?',
++     'confirm delete time' => 'Are you sure that you want to delete this time?',
+      'confirm delete task list' => 'Are you sure that you want to delete this task lists and all of its tasks?',
+      'confirm delete task' => 'Are you sure that you want to delete this task?',
+      'confirm delete comment' => 'Are you sure that you want to delete this comment?',
+***************
+*** 276,279 ****
+    
+    ); // array
+  
+- ?>--- 288,291 ----
+    
+    ); // array
+  
++ ?>

@@ -1,0 +1,119 @@
+table.applicationLogs {
+  width: 100%;
+  background:url(../images/layout/activity_today_bg.jpg)  #ffffce repeat-x;
+  border-bottom:1px solid #d9d9d9;
+}
+
+table.applicationLogs th {
+padding-left:20px;
+padding-right:20px;
+background:#FFFFFF;
+
+
+}
+
+table.applicationLogs tr.logToday {
+  background:url(../images/layout/activity_today_bg.jpg)  #ffffce repeat-x;
+
+}
+
+table.applicationLogs tr.logYesterday {
+  background: url('../images/logtypes/yesterday.gif') repeat-y;
+
+
+}
+
+/* IE7 TABLE ROW BG FIX */ 
+
+table.applicationLogs tr.logToday td.logDetails {
+  background:url(../images/layout/activity_today_bg.jpg)  #ffffce repeat-x;
+  border-top: 1px solid #d9d9d9;
+}
+
+table.applicationLogs tr.logToday td.logProject {
+  background:url(../images/layout/activity_today_bg.jpg)  #ffffce repeat-x;
+  border-top: 1px solid #d9d9d9;
+}
+
+table.applicationLogs tr.logToday td.logTakenOnBy {
+  background:url(../images/layout/activity_today_bg.jpg)  #ffffce repeat-x;
+  border-top: 1px solid #d9d9d9;
+}
+
+table.applicationLogs tr.logToday td.logTypeIcon {
+  background:url(../images/layout/activity_today_bg.jpg)  #ffffce repeat-x;
+
+  border-top: 1px solid #d9d9d9;
+}
+
+table.applicationLogs tr.logYesterday td.logDetails {
+background:url(../images/layout/activity_yesterday_bg.jpg) #e1ffce repeat-x;
+ border-top: 1px solid #d9d9d9;
+}
+
+table.applicationLogs tr.logYesterday td.logProject {
+background:url(../images/layout/activity_yesterday_bg.jpg) #e1ffce repeat-x;
+border-top: 1px solid #d9d9d9;
+}
+
+table.applicationLogs tr.logYesterday td.logTakenOnBy {
+background:url(../images/layout/activity_yesterday_bg.jpg) #e1ffce repeat-x;
+  border-top: 1px solid #d9d9d9;
+
+}
+
+table.applicationLogs tr.logYesterday td.logTypeIcon {
+background:url(../images/layout/activity_yesterday_bg.jpg) #e1ffce repeat-x;
+  border-top: 1px solid #d9d9d9;
+}
+
+table.applicationLogs tr.logOlder td.logDetails {
+background:url(../images/layout/activity_old_bg.jpg) repeat-x #efefef;
+  border-top: 1px solid #d9d9d9;
+}
+
+table.applicationLogs tr.logOlder td.logProject {
+background:url(../images/layout/activity_old_bg.jpg) repeat-x #efefef;
+  border-top: 1px solid #d9d9d9;
+  }
+
+table.applicationLogs tr.logOlder td.logTakenOnBy {
+background:url(../images/layout/activity_old_bg.jpg) repeat-x #efefef;
+  border-top: 1px solid #d9d9d9;
+ }
+
+table.applicationLogs tr.logOlder td.logTypeIcon {
+  border-top: 1px solid #d9d9d9;
+}
+
+/* END FIX*/ 
+
+table.applicationLogs tr.logOlder {
+  font-style: italic;
+background:url(../images/layout/activity_old_bg.jpg) repeat-x #efefef;
+}
+
+table.applicationLogs td {
+
+}
+
+table.applicationLogs td.logTypeIcon {
+  width: 50px;
+  text-align: right;
+}
+
+table.applicationLogs td.logTypeIcon img{
+  padding-top:5px;
+}
+
+table.applicationLogs .logProject, table.applicationLogs .logTakenOnBy {
+  text-align: right;
+}
+
+table.applicationLogs .logProject {
+  width: 300px;
+}
+
+table.applicationLogs .logTakenOnBy {
+  width: 300px;
+}

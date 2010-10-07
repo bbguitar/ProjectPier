@@ -1,0 +1,80 @@
+<?php
+
+  // Return array of langs
+  return array(
+  
+    // Objects
+    'user' => 'Nutzer',
+    'users' => 'Nutzer',
+    'member' => 'Nutzer',
+    'members' => 'Nutzer',
+    'company' => 'Firma',
+    'companies' => 'Firmen',
+    'client' => 'Weitere Firma',
+    'clients' => 'Weitere Firma',
+    'package' => 'Paket',
+    'project' => 'Projekt',
+    'projects' => 'Projekte',
+    'message' => 'Nachricht',
+    'messages' => 'Nachrichten',
+    'comment' => 'Kommentar',
+    'comments' => 'Kommentare',
+    'milestone' => 'Meilenstein',
+    'milestones' => 'Meilensteine',
+    'task' => 'Aufgabe',
+    'tasks' => 'Aufgaben',
+    'task list' => 'Aufgabenliste',
+    'task lists' => 'Aufgabenlisten',
+    'tag' => 'Tag',
+    'tags' => 'Tags',
+    'attachment' => 'Anhang',
+    'attachments' => 'Anhänge',
+    'message subscribers' => 'Abonnenten',
+    'form' => 'Formular',
+    'forms' => 'Formulare',
+    'file' => 'Datei',
+    'files' => 'Dateien',
+    'file revision' => 'Dateiversion',
+    'file revisions' => 'Dateiversionen',
+    'revision' => 'Version',
+    'revisions' => 'Versionen',
+    'folder' => 'Ordner',
+    'folders' => 'Ordner',
+    'configuration category' => 'Konfigurationskategorie',
+    'configuration categories' => 'Konfigurationskategorien',
+    
+    // Variations
+    'owner company' => 'Firma',
+    
+    'open milestone' => 'Offener Meilenstein',
+    'open milestones' => 'Offene Meilensteine',
+    'completed milestone' => 'Erreichter Meilenstein',
+    'completed milestones' => 'Erreichte Meilensteine',
+    'late milestones' => 'Verspätete Meilensteine',
+    'today milestones' => 'Heute fällige Meilensteine',
+    'upcoming milestones' => 'Anstehende Meilensteine',
+    'completed task list' => 'Geschlossene Aufgabenliste',
+    'completed task lists' => 'Geschlossene Aufgabenlisten',
+    'open task list' => 'Offene Aufgabenliste',
+    'open task lists' => 'Offene Aufgabenlisten',
+    'active project' => 'Aktives Projekt',
+    'active projects' => 'Aktive Projekte',
+    'finished project' => 'Beendetes Projekt',
+    'finished projects' => 'Beendete Projekte',
+    'attached file' => 'Angehängte Datei',
+    'attached files' => 'Angehängte Dateien',
+    
+    'important message'  => 'Wichtige Nachricht',
+    'important messages' => 'Wichtige Nachrichten',
+    'important file'     => 'Wichtige Datei',
+    'important files'    => 'Wichtige Dateien',
+    
+    'private message' => 'Private Nachricht',
+    'private milestone' => 'Privater Meilenstein',
+    'private task list' => 'Private Aufgabenliste',
+    'private comment' => 'Privater Kommentar',
+    'private file' => 'Private Datei',
+    
+  ); // array
+
+?>

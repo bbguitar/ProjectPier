@@ -1,0 +1,25 @@
+***************
+*** 70,79 ****
+      
+      'private message' => 'Private message',
+      'private milestone' => 'Private milestone',
+      'private task list' => 'Private task lists',
+      'private comment' => 'Private comment',
+      'private file' => 'Private file',
+      
+    ); // array
+  
+- ?>--- 72,84 ----
+      
+      'private message' => 'Private message',
+      'private milestone' => 'Private milestone',
++     'private time' => 'Private time',
+      'private task list' => 'Private task lists',
+      'private comment' => 'Private comment',
+      'private file' => 'Private file',
++ 
++     'billable time' => 'Billable time',
+      
+    ); // array
+  
++ ?>

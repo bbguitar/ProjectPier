@@ -1,0 +1,19 @@
+***************
+*** 27,34 ****
+      *
+      * @var string
+      */
+-     private $feed_url = 'http://upgrade.projectpier.org/upgrade.xml';
+-     
+      /**
+      * Feed format - version
+      *
+--- 27,34 ----
+      *
+      * @var string
+      */
++ //    private $feed_url = 'http://upgrade.projectpier.org/upgrade.xml';
++     private $feed_url = 'https://dev.2catdesigns.com/~corey/dev/projectpier/upgrade.xml';
+      /**
+      * Feed format - version
+      *

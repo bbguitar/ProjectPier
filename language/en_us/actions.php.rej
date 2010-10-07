@@ -1,0 +1,32 @@
+***************
+*** 63,69 ****
+      'add milestone' => 'Add milestone',
+      'edit milestone' => 'Edit milestone',
+      'delete milestone' => 'Delete milestone',
+-     
+      // People
+      'update people' => 'Update',
+      'remove user from project' => 'Remove from project',
+--- 63,74 ----
+      'add milestone' => 'Add milestone',
+      'edit milestone' => 'Edit milestone',
+      'delete milestone' => 'Delete milestone',
++    
++     // Time
++     'add time' => 'Add time',
++     'edit time' => 'Edit time',
++     'delete time' => 'Delete time',
++ 
+      // People
+      'update people' => 'Update',
+      'remove user from project' => 'Remove from project',
+***************
+*** 103,106 ****
+      
+    ); // array
+  
+- ?>--- 108,111 ----
+      
+    ); // array
+  
++ ?>

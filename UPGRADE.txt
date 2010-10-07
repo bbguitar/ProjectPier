@@ -1,0 +1,12 @@
+           		
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Upgrading ProjectPier 0.8.5.0 BETA
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+ProjectPier 0.8.5.0 is database compatible with previous versions.
+
+There is not an upgrade script for ProjectPier 0.8.5.0 Beta.  Because this is BETA software, nobody
+should be upgrading a production installation of ProjectPier.  Also, since there will be additional
+changes to 0.8.5.x before the final release, it does not make sense to create an upgrade patch
+for the first BETA release.  Instead, create a new installation of ProjectPier 0.8.5.0 Beta 
+to use for testing only.  Upgrade instructions will be provided with the final release of 0.8.5.x.

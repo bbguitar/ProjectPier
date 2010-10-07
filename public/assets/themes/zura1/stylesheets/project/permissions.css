@@ -1,0 +1,38 @@
+div.projectCompany {
+background:url(../../images/layout/default_box_bg.jpg) #f2f2f2 repeat-x;
+  margin:0;
+  border-bottom: 1px solid #d9d9d9;
+  border-top: 1px solid #d9d9d9;
+  padding: 20px;
+  min-height: 50px;
+}
+
+* html div.projectCompany {
+  height: 50px;
+}
+
+div.projectCompanyLogo {
+  float: left;
+  width: 60px;
+}
+
+div.projectCompanyMeta {
+  margin-left: 60px;
+}
+
+div.projectCompany .projectCompanyTitle label {
+  font-weight: bold;
+}
+
+div.projectCompany div.projectCompanyUsers {
+  margin: 10px 0 0 10px;
+}
+
+div.projectCompany div.projectUserPermissions {
+  padding-left: 10px;
+}
+
+div.projectCompany tr.user {
+  border: 1px solid #ccc;
+  border-width: 1px 0;
+}

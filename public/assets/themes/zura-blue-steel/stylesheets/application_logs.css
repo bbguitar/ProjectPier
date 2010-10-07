@@ -1,0 +1,109 @@
+table.applicationLogs {
+  width: 100%;
+  background:url(../images/layout/activity_today_bg.jpg)  #ffffce repeat-x;
+  border-bottom:1px solid #dee5e5;
+}
+
+table.applicationLogs th {
+padding-left:20px;
+padding-right:20px;
+background:#FFFFFF;
+}
+
+
+
+
+
+table.applicationLogs tr.logToday {
+  background: #fff;
+
+}
+
+table.applicationLogs tr.logYesterday {
+  background: #fff;
+
+
+}
+
+/* IE7 TABLE ROW BG FIX */ 
+
+table.applicationLogs tr.logToday td.logDetails {
+ background: #fff;  border-top: 1px solid #dee5e5;
+}
+
+table.applicationLogs tr.logToday td.logProject {
+ background: #fff;  border-top: 1px solid #dee5e5;
+}
+
+table.applicationLogs tr.logToday td.logTakenOnBy {
+ background: #fff;  border-top: 1px solid #dee5e5;
+}
+
+table.applicationLogs tr.logToday td.logTypeIcon {
+ background: #fff;
+  border-top: 1px solid #dee5e5;
+}
+
+table.applicationLogs tr.logYesterday td.logDetails {
+ background: #fff; border-top: 1px solid #dee5e5;
+}
+
+table.applicationLogs tr.logYesterday td.logProject {
+ background: #fff;border-top: 1px solid #dee5e5;
+}
+
+table.applicationLogs tr.logYesterday td.logTakenOnBy {
+ background: #fff;  border-top: 1px solid #dee5e5;
+
+}
+
+table.applicationLogs tr.logYesterday td.logTypeIcon {
+ background: #fff;  border-top: 1px solid #dee5e5;
+}
+
+table.applicationLogs tr.logOlder td.logDetails {
+ background: #fff;  border-top: 1px solid #dee5e5;
+}
+
+table.applicationLogs tr.logOlder td.logProject {
+ background: #fff;  border-top: 1px solid #dee5e5;
+  }
+
+table.applicationLogs tr.logOlder td.logTakenOnBy {
+ background: #fff;  border-top: 1px solid #dee5e5;
+ }
+
+table.applicationLogs tr.logOlder td.logTypeIcon {
+  border-top: 1px solid #dee5e5;
+}
+
+/* END FIX*/ 
+
+table.applicationLogs tr.logOlder {
+  font-style: italic;
+ background: #fff;}
+
+table.applicationLogs td {
+
+
+}
+
+table.applicationLogs td.logTypeIcon {
+  width: 50px;
+}
+
+table.applicationLogs td.logTypeIcon img{
+  padding-top:5px;
+}
+
+table.applicationLogs .logProject, table.applicationLogs .logTakenOnBy {
+  text-align: right;
+}
+
+table.applicationLogs .logProject {
+  width: 100px;
+}
+
+table.applicationLogs .logTakenOnBy {
+  width: 90px;
+}
